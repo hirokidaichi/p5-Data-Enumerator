@@ -1,0 +1,23 @@
+NAME
+    Data::Generator -
+
+SYNOPSIS
+        use Data::Generator qw/
+        
+
+        /;
+        my $data = make_generator({
+            make
+        });
+
+DESCRIPTION
+    Data::Generator is
+
+AUTHOR
+    Default Name <default {at} example.com>
+
+SEE ALSO
+LICENSE
+    This library is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
