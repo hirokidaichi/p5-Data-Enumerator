@@ -20,5 +20,7 @@ no_index:
     - xt
 requires: {}
 resources:
+  homepage: https://github.com/hirokidaichi/p5-Data-Generator/tree
   license: http://dev.perl.org/licenses/
+  repository: git://github.com/hirokidaichi/p5-Data-Generator.git
 version: 0.01

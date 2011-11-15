@@ -2,7 +2,6 @@ package Data::Generator::Base;
 use strict;
 use warnings;
 use Scalar::Util qw/blessed/;
-use UNIVERSAL::can;
 use constant LAST => bless {},'Data::Generator::Base::LAST';
 use constant NEXT => bless {},'Data::Generator::Base::NEXT';
 
@@ -56,6 +55,46 @@ sub where {
     return Data::Generator::Where->new([$self,$predicate]);
 }
 
+sub take {
+    my ( $self,$num ) = @_;
+    return $self->limit(0,$num);
+}
+
+sub take_while {
+    my ( $self, $predicate ) = @_;
+    my $flag = 1;
+    return $self->where(
+        sub {
+            return $self->LAST unless $flag;
+            my $result =  $predicate->(@_);
+            $flag = 0 unless $result;
+            return $result;
+        }
+    );
+}
+
+sub skip_while {
+    my ( $self, $predicate ) = @_;
+    my $flag = 1;
+    return $self->where(
+        sub {
+            return 1 unless $flag;
+            my $result = not $predicate->(@_);
+            $flag = 0 if $result;
+            return $result;
+        }
+    );
+}
+sub repeat {
+    my ($self) = @_;
+    require Data::Generator::Repeat;
+    return Data::Generator::Repeat->new($self);
+}
+
+sub to_array {
+    return [ shift->list ];
+}
+
 sub limit {
     my ( $self,$offset,$limit ) = @_;
     require Data::Generator::Limit;
@@ -72,12 +111,6 @@ sub product {
     my ( $self,$generator) = @_;
     require Data::Generator::Product;
     return Data::Generator::Product->new([$self,$generator]);
-}
-
-sub from {
-    my ( $proto,$generator ) = @_;
-    $proto->product($generator ) if blessed $proto;
-    return $generator;
 }
 
 sub list {

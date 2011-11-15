@@ -2,10 +2,28 @@ NAME
     Data::Generator -
 
 SYNOPSIS
-        use Data::Generator qw/
-        
+        use Data::Generator qw/pattern generator/;
 
-        /;
+        my $cases = generator(
+            {   hoge  => pattern(qw/a b c/),
+                fuga  => pattern(qw/x y z/),
+                fixed => 0
+            }
+        );
+
+        for my $case ( $cases->list ){
+               print pp($case);
+        }
+
+         # { hoge => 'a',fuga => 'x'}
+         # { hoge => 'a',fuga => 'y'}
+         # { hoge => 'a',fuga => 'z'}
+         # { hoge => 'b',fuga => 'x'}
+         # { hoge => 'b',fuga => 'y'}
+         # { hoge => 'b',fuga => 'z'}
+         # { hoge => 'c',fuga => 'x'}
+         # { hoge => 'c',fuga => 'y'}
+         # { hoge => 'c',fuga => 'z'}
 
 DESCRIPTION
     Data::Generator is

@@ -11,7 +11,7 @@ sub iterator {
         my $value = $object_iterator->();
         return $self->LAST if $self->is_last($value);
         my $result = $filter->($value);
-        return $self->LAST if $self->is_last($value);
+        return $self->LAST if $self->is_last($result);
         return $iterator->() unless $result;
         return $value;
     };

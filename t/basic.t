@@ -3,10 +3,16 @@ use Test::More;
 use Data::Dump qw/pp/;
 use Data::Generator qw/
     pattern
+    range
     /;
 {
     my $b = pattern( 1, 2, 3, 4, 5 );
-    is_deeply( [ $b->list ], [ 1, 2, 3, 4, 5 ], 'same value' );
+    is_deeply(  $b->to_array, [ 1, 2, 3, 4, 5 ], 'same value' );
+}
+{
+    my $r = range( 1, 10, 2 );
+    is_deeply( $r->to_array,
+        [pattern( 1 .. 10 )->where( sub { $_[0] % 2 } )->list] );
 }
 {
     my $b = pattern( 1, [1], 3, 4, 5 );
