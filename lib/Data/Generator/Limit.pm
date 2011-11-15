@@ -3,17 +3,22 @@ use strict;
 use warnings;
 use base qw/Data::Generator::Base/;
 
-sub each {
-    my ( $self ,$f) = @_;
-    my ($object,$offset,$limit ) = @{$self->object};
-    my $current_offset = 0;
-    my $current_limit  = 0;
-    $object->each(sub {
-        my $value = shift;
-        return $self->NEXT if( $current_offset++ < $offset );
+
+sub iterator {
+    my ( $self ) = @_;
+    my ( $object, $offset, $limit ) = @{ $self->object };
+    my $object_iterator = $object->iterator;
+    my $current_offset  = 0;
+    my $current_limit   = 0;
+    my $iterator;
+    $iterator = sub {
+        my $value = $object_iterator->();
+        return $iterator->() if ( $current_offset++ < $offset );
         return $self->LAST if( $current_limit++ >= $limit );
-        $f->($value);
-    });
+        return $value;
+    };
+    return $iterator;
 }
+
 1;
 

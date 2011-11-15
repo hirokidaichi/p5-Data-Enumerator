@@ -2,10 +2,9 @@ package Data::Generator;
 use strict;
 use warnings;
 use Exporter qw/import/;
-use Data::Visitor::Callback;
 use Data::Generator::Base;
 use Data::Generator::Array;
-
+use Data::Generator::Deeply;
 
 our @EXPORT_OK = qw/
     generator
@@ -29,7 +28,9 @@ sub pattern {
 
 
 sub generator{
-    
+    my ( $target ) = @_;
+    return Data::Generator::Deeply->compose($target);
+
 }
 
 
@@ -47,9 +48,7 @@ Data::Generator -
         
 
     /;
-    my $data = make_generator({
-        make
-    });
+
 
 =head1 DESCRIPTION
 

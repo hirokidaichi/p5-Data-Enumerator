@@ -6,9 +6,6 @@ SYNOPSIS
         
 
         /;
-        my $data = make_generator({
-            make
-        });
 
 DESCRIPTION
     Data::Generator is

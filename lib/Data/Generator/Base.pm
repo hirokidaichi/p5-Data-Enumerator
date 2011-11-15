@@ -24,13 +24,23 @@ sub is_next {
     return (ref $_[1] and ref $_[1] eq 'Data::Generator::Base::NEXT');
 }
 
+sub iterator {
+    my ( $self ) = @_;
+    my $count = 0;
+    return sub{
+        return LAST if ($count >= scalar( @{$self->object}));
+        $self->object->[$count++];
+    };
+}
+
 sub each {
     my ( $self,$f) = @_;
-    my @list = @{$self->object};
-    for my $value ( @list ) {
-        my $result = $f->($value); 
-        last if( $self->is_last( $result ) );
-        next if( $self->is_next( $result ) );
+    my $iter = $self->iterator;
+    while(1){
+        my $result = $iter->();
+        last if( $self->is_last( $result ));
+        my $value = $f->( $result );
+        last if( $self->is_last( $value ));
     }
 }
 

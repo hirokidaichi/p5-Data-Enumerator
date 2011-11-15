@@ -3,18 +3,20 @@ use strict;
 use warnings;
 use base qw/Data::Generator::Base/;
 
-sub each {
-    my ( $self,$f ) = @_;
+sub iterator {
+    my ( $self ) = @_;
     my ($object,$filter ) = @{$self->object};
-    $object->each(sub{
-        my $value = shift;
+    my $object_iterator = $object->iterator;
+    my $iterator;$iterator = sub{
+        my $value = $object_iterator->();
+        return $self->LAST if $self->is_last($value);
         my $result = $filter->($value);
-        return unless $result;
-        return $result if $self->is_last( $result );
-        return $result if $self->is_next( $result );
-        return $f->( $value );
-    });
-    
+        return $self->LAST if $self->is_last($value);
+        return $iterator->() unless $result;
+        return $value;
+    };
 }
+
+
 1;
 
