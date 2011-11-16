@@ -17,20 +17,22 @@ sub iterator {
     my $iter_b  = $b->iterator;
     my $value_a = $iter_a->();
     my $iterator;$iterator = sub {
-        my $value_b = $iter_b->();
-        if( $self->is_last( $value_a )){
-            # aが最後までいったら終了
-            return $self->LAST;
+        while(1){
+            my $value_b = $iter_b->();
+            if( $self->is_last( $value_a )){
+                # aが最後までいったら終了
+                return $self->LAST;
+            }
+            if( $self->is_last($value_b)){
+                # 最後まで行ったら、iterator再生成
+                $iter_b = $b->iterator;
+                # aを次の値にする
+                $value_a = $iter_a->();
+                # この条件でもう一度
+                next;
+            }
+            return [__flatten($value_a),__flatten($value_b)];
         }
-        if( $self->is_last($value_b)){
-            # 最後まで行ったら、iterator再生成
-            $iter_b = $b->iterator;
-            # aを次の値にする
-            $value_a = $iter_a->();
-            # この条件でもう一度
-            return $iterator->();
-        }
-        return [__flatten($value_a),__flatten($value_b)];
     };
     return $iterator;
 }

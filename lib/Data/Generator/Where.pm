@@ -7,13 +7,14 @@ sub iterator {
     my ( $self ) = @_;
     my ($object,$filter ) = @{$self->object};
     my $object_iterator = $object->iterator;
-    my $iterator;$iterator = sub{
-        my $value = $object_iterator->();
-        return $self->LAST if $self->is_last($value);
-        my $result = $filter->($value);
-        return $self->LAST if $self->is_last($result);
-        return $iterator->() unless $result;
-        return $value;
+    return sub{
+        while(1){
+            my $value = $object_iterator->();
+            return $self->LAST if $self->is_last( $value );
+            my $result = $filter->($value);
+            return $self->LAST if $self->is_last( $result );
+            return $value if $result;
+        }
     };
 }
 

@@ -10,14 +10,14 @@ sub iterator {
     my $object_iterator = $object->iterator;
     my $current_offset  = 0;
     my $current_limit   = 0;
-    my $iterator;
-    $iterator = sub {
-        my $value = $object_iterator->();
-        return $iterator->() if ( $current_offset++ < $offset );
-        return $self->LAST if( $current_limit++ >= $limit );
-        return $value;
+    return sub {
+        while (1) {
+            my $value = $object_iterator->();
+            next if ( $current_offset++ < $offset );
+            return $self->LAST if ( $current_limit++ >= $limit );
+            return $value;
+        }
     };
-    return $iterator;
 }
 
 1;
