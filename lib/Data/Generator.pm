@@ -15,7 +15,7 @@ our @EXPORT_OK = qw/
     EACH_NEXT
 /;
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 sub EACH_LAST {
     Data::Generator::Base->LAST;

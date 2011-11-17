@@ -35,4 +35,27 @@ use Data::Generator qw/pattern/;
         ],
     );
 }
+
+{
+    my $p = pattern(1..3)->product(pattern(1..5))->select([qw/hoge fuga/]);
+    is_deeply(
+        $p->to_array,
+        [   { fuga => 1, hoge => 1 },
+            { fuga => 2, hoge => 1 },
+            { fuga => 3, hoge => 1 },
+            { fuga => 4, hoge => 1 },
+            { fuga => 5, hoge => 1 },
+            { fuga => 1, hoge => 2 },
+            { fuga => 2, hoge => 2 },
+            { fuga => 3, hoge => 2 },
+            { fuga => 4, hoge => 2 },
+            { fuga => 5, hoge => 2 },
+            { fuga => 1, hoge => 3 },
+            { fuga => 2, hoge => 3 },
+            { fuga => 3, hoge => 3 },
+            { fuga => 4, hoge => 3 },
+            { fuga => 5, hoge => 3 },
+        ]
+    );
+}
 ::done_testing;

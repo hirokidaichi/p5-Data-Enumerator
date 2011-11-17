@@ -84,6 +84,5 @@ use Data::Generator qw/
             [ 1, "c", "z", 1, "c", "z" ],
         ],
     );
-
 }
 ::done_testing;
