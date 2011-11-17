@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 use Data::Dump qw/pp/;
-use Data::Generator qw/
+use Data::Enumerator qw/
     pattern
     EACH_LAST
     /;

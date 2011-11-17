@@ -1,7 +1,7 @@
 use inc::Module::Install;
-name 'Data-Generator';
-all_from 'lib/Data/Generator.pm';
-readme_from 'lib/Data/Generator.pm';
+name 'Data-Enumerator';
+all_from 'lib/Data/Enumerator.pm';
+readme_from 'lib/Data/Enumerator.pm';
 
 githubmeta;
 

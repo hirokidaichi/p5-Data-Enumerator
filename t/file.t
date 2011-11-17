@@ -1,10 +1,10 @@
 use strict;
 use warnings;
 use Test::More;
-use Data::Generator::File;
+use Data::Enumerator::File;
 use Data::Dump qw/pp/;
 
-my $f = Data::Generator::File->new('README');
+my $f = Data::Enumerator::File->new('README');
 
 open my $fh , '<','README';
 my @f = <$fh>;

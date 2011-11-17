@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 use List::MoreUtils qw/uniq/;
-use Data::Generator qw/pattern generator/;
+use Data::Enumerator qw/pattern generator/;
 use Data::Dump qw/pp/;
 =pod
 

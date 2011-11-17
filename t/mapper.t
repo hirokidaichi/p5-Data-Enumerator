@@ -1,7 +1,7 @@
 use strict;
 use Test::More;
 use Data::Dump qw/pp/;
-use Data::Generator qw/pattern/;
+use Data::Enumerator qw/pattern/;
 {
     my $hoge = pattern((1..3));
     my $fuga = $hoge->select(sub{$_[0]*2});

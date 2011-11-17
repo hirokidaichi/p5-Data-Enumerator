@@ -10,4 +10,4 @@ hirokidaichi {at} gmail.com
 API
 IEnumerable
 itertools
-Data::Generator
+Data::Enumerator

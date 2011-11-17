@@ -1,8 +1,8 @@
 NAME
-    Data::Generator - some iterator utilities for perl
+    Data::Enumerator - some iterator utilities for perl
 
 SYNOPSIS
-        use Data::Generator qw/pattern generator/;
+        use Data::Enumerator qw/pattern generator/;
 
         my $cases = generator(
             {   hoge  => pattern(qw/a b c/),
@@ -26,8 +26,8 @@ SYNOPSIS
          # { hoge => 'c',fuga => 'z'}
 
 DESCRIPTION
-    Data::Generator is utilities for iteration and test data generation like
-    itertools in python or C# IEnumerable.
+    Data::Enumerator is utilities for iteration and test data generation
+    like itertools in python or C# IEnumerable.
 
     This module is marked EXPERIMENTAL. API could be changed without any
     notice.
