@@ -2,7 +2,7 @@ package Data::Enumerator::Deeply;
 use strict;
 use warnings;
 use Data::Enumerator::Base;
-use Data::Visitor::Callback;
+use Data::Visitor::Lite;
 {
     package Data::Enumerator::Deeply::_Swap;
     sub new {
@@ -69,16 +69,12 @@ sub __get_template_and_generator{
     my ( $struct ) = @_;
     my @generators;
     my $count = 0;
-    my $v     = Data::Visitor::Callback->new(
-        'object' => sub {
-            my ( $v,$obj) = @_;
-            if( $obj->isa('Data::Enumerator::Base')){
-                push @generators,$obj;
-                return __swapper( $count++);
-            }
-            return $obj;
-        },
-
+    my $v     = Data::Visitor::Lite->new(
+        ['-instance' => 'Data::Enumerator::Base'=> sub {
+            my ($obj) = @_;
+            push @generators,$obj;
+            return __swapper( $count++);
+        }]
     );
     my $template  = $v->visit( $struct );
     my $producted = __product_all(@generators);
@@ -86,12 +82,13 @@ sub __get_template_and_generator{
 }
 
 sub __convert_by_template {
-    my ( $template,$value ) = @_;
-    my $v = Data::Visitor::Callback->new(
-        'Data::Enumerator::Deeply::_Swap' => sub {
-            my ( $v, $obj ) = @_;
-            return $obj->value($value);
-        },
+    my ( $template, $value ) = @_;
+    my $v = Data::Visitor::Lite->new(
+        [   -instance => 'Data::Enumerator::Deeply::_Swap' => sub {
+                my ($obj ) = @_;
+                return $obj->value($value);
+                }
+        ]
     );
     return $v->visit($template);
 }

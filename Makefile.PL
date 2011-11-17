@@ -5,7 +5,7 @@ readme_from 'lib/Data/Enumerator.pm';
 
 githubmeta;
 
-requires 'Data::Visitor::Callback';
+requires 'Data::Visitor::Lite';
 requires 'List::MoreUtils';
 requires 'Scalar::Util';
 requires 'IO::File';
