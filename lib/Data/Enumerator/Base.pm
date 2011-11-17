@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use Scalar::Util qw/blessed/;
 use constant LAST => bless {},'Data::Enumerator::Base::LAST';
-use constant NEXT => bless {},'Data::Enumerator::Base::NEXT';
 
 sub new {
     my ( $class,$object) = @_;
@@ -19,9 +18,7 @@ sub object {
 sub is_last {
     return (ref $_[1] and ref $_[1] eq 'Data::Enumerator::Base::LAST');
 }
-sub is_next {
-    return (ref $_[1] and ref $_[1] eq 'Data::Enumerator::Base::NEXT');
-}
+
 
 sub iterator {
     my ( $self ) = @_;

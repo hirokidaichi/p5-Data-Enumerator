@@ -3,7 +3,7 @@ use warnings;
 use Test::More;
 use List::MoreUtils qw/uniq/;
 use Data::Enumerator qw/pattern generator/;
-use Data::Dump qw/pp/;
+
 =pod
 
 Baker, Cooper, Fletcher, MillerとSmithは五階建てアパートの異なる階に住んでいる。

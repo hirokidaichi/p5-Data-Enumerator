@@ -1,6 +1,6 @@
 use strict;
 use Test::More;
-use Data::Dump qw/pp/;
+
 use Data::Enumerator qw/
     independ
     range

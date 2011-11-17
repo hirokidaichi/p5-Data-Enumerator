@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Test::More;
 use Data::Enumerator::File;
-use Data::Dump qw/pp/;
+
 
 my $f = Data::Enumerator::File->new('README');
 

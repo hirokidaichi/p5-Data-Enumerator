@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
-use Data::Dump qw/pp/;
+
 use Data::Enumerator qw/
     pattern
     EACH_LAST

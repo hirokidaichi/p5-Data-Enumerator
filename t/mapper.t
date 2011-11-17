@@ -1,6 +1,6 @@
 use strict;
 use Test::More;
-use Data::Dump qw/pp/;
+
 use Data::Enumerator qw/pattern/;
 {
     my $hoge = pattern((1..3));

@@ -6,40 +6,44 @@ use Data::Enumerator::Base;
 use Data::Enumerator::Array;
 use Data::Enumerator::Deeply;
 use Data::Enumerator::Range;
+use Data::Enumerator::File;
 our @EXPORT_OK = qw/
     generator
     pattern
     range
     independ
+    readfile
     EACH_LAST
-    EACH_NEXT
-/;
+    /;
 
-our $VERSION = '0.02_1';
+our $VERSION = '0.03';
 
 sub EACH_LAST {
     Data::Enumerator::Base->LAST;
 }
-sub EACH_NEXT {
-    Data::Enumerator::Base->NEXT;
-}
 
 sub pattern {
-    return Data::Enumerator::Array->new(\@_);
+    return Data::Enumerator::Array->new( \@_ );
 }
 
 sub independ {
-    my ( $target ) = @_;
+    my ($target) = @_;
     return Data::Enumerator::Deeply::independ($target);
 }
-sub generator{
-    my ( $target ) = @_;
+
+sub generator {
+    my ($target) = @_;
     return Data::Enumerator::Deeply->compose($target);
 }
 
+sub readfile {
+    my ($filename) = @_;
+    return Data::Enumerator::File->new($filename);
+}
+
 sub range {
-    my ( $start,$end,$succ) = @_;
-    return Data::Enumerator::Range->new($start,$end,$succ);
+    my ( $start, $end, $succ ) = @_;
+    return Data::Enumerator::Range->new( $start, $end, $succ );
 }
 1;
 __END__
