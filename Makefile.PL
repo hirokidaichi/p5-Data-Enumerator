@@ -5,8 +5,13 @@ readme_from 'lib/Data/Generator.pm';
 
 githubmeta;
 
-# requires '';
+requires 'Data::Visitor::Callback';
+requires 'List::MoreUtils';
+requires 'Scalar::Util';
+requires 'IO::File';
+requires 'Exporter';
 
+test_requires 'Test::More';
 tests 't/*.t';
 author_tests 'xt';
 

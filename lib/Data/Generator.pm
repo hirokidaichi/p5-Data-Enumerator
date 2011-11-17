@@ -15,7 +15,7 @@ our @EXPORT_OK = qw/
     EACH_NEXT
 /;
 
-our $VERSION = '0.02';
+our $VERSION = '0.01';
 
 sub EACH_LAST {
     Data::Generator::Base->LAST;
@@ -41,13 +41,12 @@ sub range {
     my ( $start,$end,$succ) = @_;
     return Data::Generator::Range->new($start,$end,$succ);
 }
-
 1;
 __END__
 
 =head1 NAME
 
-Data::Generator -
+Data::Generator - some iterator utilities for perl
 
 =head1 SYNOPSIS
 
@@ -77,13 +76,62 @@ Data::Generator -
 
 =head1 DESCRIPTION
 
-Data::Generator is
+Data::Generator is utilities for iteration and test data generation 
+like itertools in python or C# IEnumerable.
+
+This module is marked B<EXPERIMENTAL>. API could be changed without any notice.
+
+=head2 pattern
+
+to create an iterator by a provided list.
+
+    my $gen = pattern(qw/a b c/);
+    # $gen->list => ('a','b','c')
+
+a generator can product another generator
+
+    my $gen = pattern(qw/a b c/)->product(pattern(qw/x y/));
+    # $gen->list
+    #  ["a", "x"],
+    #  ["a", "y"],
+    #  ["b", "x"],
+    #  ["b", "y"],
+    #  ["c", "x"],
+    #  ["c", "y"],
+
+
+=head2 generator
+
+to create all pattern of data structure which contains pattern.
+
+    my $users = generator({
+        sex      => pattern(qw/male female/),
+        age      => range(10,90,5),
+        category => pattern(qw/elf human dwarf gnome lizardman/)
+    })
+    
+this code is a syntax sugar of the following code:
+
+    my $user = pattern(qw/male female/)
+        ->product( range(10,90,5) )
+        ->product( pattern(qw/elf human dwarf gnome lizardman/))
+        ->select(sub{
+            +{ sex => $_[0]->[0],age => $_[0]->[1],category => $_[0]->[2]}
+        });
+
+so you can enumerate all pattern of users.
+
+    $user->each(sub{
+        my $user = shift;
+        $ do stuff
+    });
 
 =head1 AUTHOR
 
-Default Name E<lt>default {at} example.comE<gt>
+Daichi Hiroki E<lt>hirokidaichi {at} gmail.comE<gt>
 
 =head1 SEE ALSO
+
 
 =head1 LICENSE
 

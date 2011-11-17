@@ -1,2 +1,1 @@
-steps = FindVersion, ChangeVersion,  DistTest, Commit, Tag, MakeDist
-git.push_to = origin
+steps = FindVersion, ChangeVersion,  DistTest, Commit, Tag, MakeDist,UploadCPAN
